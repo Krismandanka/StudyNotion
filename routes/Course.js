@@ -1,4 +1,4 @@
-
+// Import the required modules
 const express = require("express")
 const router = express.Router()
 
@@ -12,16 +12,10 @@ const {
   getInstructorCourses,
   editCourse,
   getFullCourseDetails,
+  deleteCourse,
+  searchCourse,
+  markLectureAsComplete,
 } = require("../controllers/Course")
-// createCourse,
-//   getAllCourses,
-//   getCourseDetails,
-//   getInstructorCourses,
-//   editCourse,
-//   getFullCourseDetails,
-//   deleteCourse,
-//   searchCourse,
-//   markLectureAsComplete,
 
 
 // Categories Controllers Import
@@ -114,4 +108,3 @@ router.get("/getAverageRating", getAverageRating)
 router.get("/getReviews", getAllRating)
 
 module.exports = router;
-

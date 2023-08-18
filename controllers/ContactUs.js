@@ -1,5 +1,3 @@
-
-
 const mailSender = require("../utils/mailSender");
 
 
@@ -15,8 +13,7 @@ exports.contactUs = async (req, res) => {
             message: "All Fields are required",
         });
     }
-
-    try{
+    try {
         const data={
             firstName,
             lastName: `${lastName ? lastName : "null"}`,
@@ -41,14 +38,10 @@ exports.contactUs = async (req, res) => {
                 message: "Something went wrong",
             });
         }
-
-
-
-
-    }catch(error){
+    } catch (error) {
         return res.status(403).send({
             success: false,
             message: "Something went wrong",
         });
     }
-}
+};

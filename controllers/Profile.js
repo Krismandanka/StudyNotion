@@ -1,109 +1,95 @@
-
 const Profile = require("../models/Profile");
 const User = require("../models/User");
+const Course = require("../models/Course");
+const { uploadImageToCloudinary } = require("../utils/imageUploader");
+// Method for updating a profile
+exports.updateProfile = async (req, res) => {
+	try {
+		const { dateOfBirth = "", about = "", contactNumber="",firstName,lastName,gender="" } = req.body;
+		const id = req.user.id;
 
-exports.updateProfile =async (req,res)=>{
-    try{
-        // get data
-        const {dateOfBirth="",about="",contactNumber,gender}=req.body;
-        // get userId
-        const id =req.user.id;
-        // validation
-        if(!contactNumber || !gender || !id){
-            return res.status(400).json({
-                success:false,
-                message:"all field require"
-            })
-        }
-        // find profile
-        const userDetails = await User.findById(id);
-        const profileId =userDetails.additionalDetails;
-        const profileDetails = await Profile.findById(profileId);
-        // update profile
-        profileDetails.dateOfBirth=dateOfBirth;
-        profileDetails.about=about;
-        profileDetails.gender=gender;
-        profileDetails.contactNumber=contactNumber;
-        await profileDetails.save();
+		// Find the profile by id
+		const userDetails = await User.findById(id);
+		const profile = await Profile.findById(userDetails.additionalDetails);
 
-        // reees
-        return res.status(200).json({
-            success:success,
-            message:"profileupdated sucesfully",
-            profileDetails
-        })
-    }catch(error){
-        console.error
-        (error);
-        return res.status(400).json({
-            success:false,
-            message:"profile update problem"
-        })
-    }
-}
+		// Update the profile fields
+		userDetails.firstName = firstName || userDetails.firstName;
+		userDetails.lastName = lastName || userDetails.lastName;
+		profile.dateOfBirth = dateOfBirth || profile.dateOfBirth;
+		profile.about = about || profile.about;
+		profile.gender=gender || profile.gender;
+		profile.contactNumber = contactNumber || profile.contactNumber;
 
-// deleete account
-exports.deleteAccount =async (req,res)=>{
-    try{
-        // get id
-        const id = req.user.id;
+		// Save the updated profile
+		await profile.save();
+		await userDetails.save();
 
-        // validation
-        const userDetails = await User.findById(id);
-        if(!userDetails){
-            return res.status(404).json({
-                success:false,
-                message:"no user id expist"
-            })
-        }
-        // delete profile
-        const profileId = userDetails.additionalDetails;
-        await Profile.findByIdAndDelete({_id:profileId});
-                // hw todo delete it from enrolled user courses
-                // search cronJob
+		return res.json({
+			success: true,
+			message: "Profile updated successfully",
+			profile,
+			userDetails
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			success: false,
+			error: error.message,
+		});
+	}
+};
 
+exports.deleteAccount = async (req, res) => {
+	try {
+		// TODO: Find More on Job Schedule
+		// const job = schedule.scheduleJob("10 * * * * *", function () {
+		// 	console.log("The answer to life, the universe, and everything!");
+		// });
+		// console.log(job);
+		const id = req.user.id;
+		const user = await User.findById({ _id: id });
+		if (!user) {
+			return res.status(404).json({
+				success: false,
+				message: "User not found",
+			});
+		}
+		// Delete Assosiated Profile with the User
+		await Profile.findByIdAndDelete({ _id: user.additionalDetails });
+		// TODO: Unenroll User From All the Enrolled Courses
+		// Now Delete User
+		await User.findByIdAndDelete({ _id: id });
+		res.status(200).json({
+			success: true,
+			message: "User deleted successfully",
+		});
+	} catch (error) {
+		console.log(error);
+		res
+			.status(500)
+			.json({ success: false, message: "User Cannot be deleted successfully",error:error.message });
+	}
+};
 
-
-
-        // delete user
-        await User.findByIdAndDelete({_id_id});
-
-
-    
-        return res.status(200).json({
-            success:true,
-            message:"user deleted successfullly"
-        })
-
-    }catch(error){
-        
-        return res.status(400).json({
-            success:false,
-            message:"issue in deletion acoount"
-        })
-    }
-}
-
-
-xports.getAllUserDetails =async (req,res)=>{
-    try{
-        const id = req.user.id;
-        const userDetails = await User.findById(id).populate("additionalDetails").exec();
-        return res.status(200).json({
-            success:true,
-            message:"all user details",
-            userDetails
-        })
-
-    }catch(error){
-        
-        return res.status(400).json({
-            success:false,
-            message:error.message
-        })
-    }
-}
-
+exports.getAllUserDetails = async (req, res) => {
+	try {
+		const id = req.user.id;
+		const userDetails = await User.findById(id)
+			.populate("additionalDetails")
+			.exec();
+		console.log(userDetails);
+		res.status(200).json({
+			success: true,
+			message: "User Data fetched successfully",
+			data: userDetails,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: error.message,
+		});
+	}
+};
 
 exports.getEnrolledCourses=async (req,res) => {
 	try {

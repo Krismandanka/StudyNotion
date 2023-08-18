@@ -1,24 +1,33 @@
 const Section = require("../models/Section");
 const Course = require("../models/Course");
-
+// CREATE a new section
 exports.createSection = async (req, res) => {
   try {
-    // data fetch
+    // Extract the required properties from the request body
     const { sectionName, courseId } = req.body;
 
-    // data validatiokn
+    // Validate the input
     if (!sectionName || !courseId) {
       return res.status(400).json({
         success: false,
-        message: "missing propertirs",
+        message: "Missing required properties",
       });
     }
-    // createsection
+
+    const ifcourse = await Course.findById(courseId);
+    if (!ifcourse) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    // Create a new section with the given name
     const newSection = await Section.create({ sectionName });
 
-    // update courses
-    const updatedCourseDetails = await Course.findByIdAndUpdate(
-      { courseId },
+    // Add the new section to the course's content array
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
       {
         $push: {
           courseContent: newSection._id,
@@ -33,67 +42,68 @@ exports.createSection = async (req, res) => {
         },
       })
       .exec();
-    // return res
-    return res.status(200).json({
+
+    // Return the updated course object in the response
+    res.status(200).json({
       success: true,
       message: "Section created successfully",
-      updatedCourseDetails,
+      updatedCourse,
     });
   } catch (error) {
-    return res.status(500).json({
+    // Handle errors
+    res.status(500).json({
       success: false,
-      message: "Unable to create sectcion plz try gain",
+      message: "Internal server error",
       error: error.message,
     });
   }
 };
 
+// UPDATE a section
 exports.updateSection = async (req, res) => {
   try {
-    const { sectionName, sectionId } = req.body;
-
-    if (!sectionName || !sectionId) {
-      return res.status(400).json({
-        success: false,
-        message: "missing propertirs",
-      });
-    }
-    const sectcion = await Section.findByIdAndUpdate(
-      { sectionId },
+    const { sectionName, sectionId, courseId } = req.body;
+    console.log(sectionName, sectionId);
+    const section = await Section.findByIdAndUpdate(
+      sectionId,
       { sectionName },
       { new: true }
     );
-    return res.status(200).json({
+    const updatedCourse = await Course.findById(courseId)
+      .populate({ path: "courseContent", populate: { path: "subSection" } })
+      .exec();
+    res.status(200).json({
       success: true,
-      message: "section updated successfully",
+      message: "Section updated successfully",
+      updatedCourse,
     });
   } catch (error) {
-    return res.status(500).json({
+    console.error("Error updating section:", error);
+    res.status(500).json({
       success: false,
-      message: "Unable to update sectcion plz try gain",
-      error: error.message,
+      message: "Internal server error",
     });
   }
 };
 
+// DELETE a section
 exports.deleteSection = async (req, res) => {
   try {
-    const { sectionId } = req.params;
-
-    await Section.findByIdAndDelete({ sectionId });
-
-    // 5Todo do we need to delete the entry from th ]e course schems
-    
-
-    return res.status(200).json({
+    const { sectionId, courseId } = req.body;
+    await Section.findByIdAndDelete(sectionId);
+    const updatedCourse = await Course.findById(courseId)
+      .populate({ path: "courseContent", populate: { path: "subSection" } })
+      .exec();
+    res.status(200).json({
       success: true,
-      message: "section deleted successfully",
+      message: "Section deleted",
+      updatedCourse,
     });
   } catch (error) {
-    return res.status(500).json({
+    console.error("Error deleting section:", error);
+    res.status(500).json({
       success: false,
-      message: "Unable to delelte sectcion plz try gain",
-      error: error.message,
+      message: "Internal server error",
     });
   }
 };

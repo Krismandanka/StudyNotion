@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 // Define the RatingAndReview schema
@@ -6,7 +5,7 @@ const ratingAndReviewSchema = new mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		required: true,
-		ref: "User",
+		ref: "user",
 	},
 	rating: {
 		type: Number,
