@@ -16,6 +16,10 @@ const courseProgress = new mongoose.Schema({
             ref:"SubSection"
         },
     ],
+    userID: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User",
+	},
     
     
 

@@ -10,7 +10,7 @@ const sectionSchema = new mongoose.Schema({
     },
     subSection:[
         {
-            type:mongoose.Schema.Types.ObjectID,
+            type:mongoose.Schema.Types.ObjectId,
             require:true,
             res:"SubSection",
         },

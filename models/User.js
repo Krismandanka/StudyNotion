@@ -22,6 +22,14 @@ const userSchema = new mongoose.Schema({
         required:true,
         
     },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+    approved: {
+        type: Boolean,
+        default: true,
+    },
     accountType:{
         type:String,
         required:true,
@@ -51,8 +59,14 @@ const userSchema = new mongoose.Schema({
             ref:"CourseProgress"
         },
     ],
+    token:{
+        type:String
+    },
+    resetPasswordExpires:{
+        type:Date,
+    }
 
 
-})
+}	,{ timestamps: true })
 
 module.exports=mongoose.model("User",userSchema);
