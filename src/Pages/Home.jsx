@@ -7,6 +7,9 @@ import CodeBlocks from "../Components/core/HomePage/CodeBlocks";
 import TimelineSection from "../Components/core/HomePage/TimelineSction";
 import LearningLanguageSection from "../Components/core/HomePage/LearningLanguageSection";
 import InstructorSection from "../Components/core/HomePage/instructorSection";
+import ExploreMore from "../Components/core/HomePage/ExploreMore";
+
+
 
 const Home = () => {
   return (
@@ -102,6 +105,7 @@ const Home = () => {
             backgroudGradient={"grad1"}
           />
         </div>
+        <ExploreMore />
       </div>
 
       {/* secrion2 */}
