@@ -8,7 +8,8 @@ import TimelineSection from "../Components/core/HomePage/TimelineSction";
 import LearningLanguageSection from "../Components/core/HomePage/LearningLanguageSection";
 import InstructorSection from "../Components/core/HomePage/instructorSection";
 import ExploreMore from "../Components/core/HomePage/ExploreMore";
-
+import RatingSlider from "../Components/core/Rating/RatingSlider";
+import Foot from "../Components/core/HomePage/Foot";
 
 
 const Home = () => {
@@ -158,11 +159,14 @@ const Home = () => {
 
             {/* Review Slider here */}
       </div>
+      {/* <div className=' mb-16 mt-3'>
+        <h2 className='text-center text-2xl md:text-4xl font-semibold mt-8 text-richblack-5 mb-5'>Reviews from other learners</h2>
+        <RatingSlider />
+      </div> */}
 
 
 
-
-      {/* <footer></footer> */}
+      <Foot />
     </div>
   );
 };
