@@ -5,7 +5,7 @@ import logo from "../../assets/Logo/Logo-Full-Light.png"
 import {NavbarLinks} from "../../data/navbar-links"
 import { useLocation } from 'react-router-dom'
 import { matchPath } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { TiShoppingCart } from 'react-icons/ti'
 import ProfileDropDown from '../core/auth/ProfileDropDown'
 import { useState } from 'react'
@@ -15,6 +15,8 @@ import { categories } from '../../services/apis'
 
 
 const Navbar = () => {
+    const dispatch=useDispatch;
+
 
 
     const {token} =useSelector((state)=>state.auth);
@@ -31,10 +33,11 @@ const Navbar = () => {
 
 
             // two time datat
-            console.log("pring ting sublink result",result?.data?.data);
+            console.log("pring ting sublink result",result?.data?.data[0].name);
 
 
             setSubLinks(result.data.data);
+            console.log("kuch",subLinks);
 
             
         }catch(error){
@@ -82,6 +85,21 @@ const Navbar = () => {
 
                                                         </div>)
                                                     } */}
+                                                    {
+                                                        subLinks?.length<0?(<div></div>):(
+                                                            subLinks?.map((element,index)=>(
+                                                                <Link to={`/catalog/${element?.name}`} key={index} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50" onClick={fetchSublinks}>
+                                                                    <p className=''>
+                                                                        me
+                                                                    </p>
+                                                                </Link>
+                                                            ))
+                                                        )
+
+                                                    }
+
+
+
                                                 </div>
                                             </div>
                                         </div>
