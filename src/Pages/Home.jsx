@@ -10,9 +10,13 @@ import InstructorSection from "../Components/core/HomePage/instructorSection";
 import ExploreMore from "../Components/core/HomePage/ExploreMore";
 import RatingSlider from "../Components/core/Rating/RatingSlider";
 import Foot from "../Components/core/HomePage/Foot";
+import {logout} from "../services/operations/authAPI"
+import { useDispatch } from "react-redux";
 
 
 const Home = () => {
+  // const dispatch = useDispatch();
+  // dispatch(logout());
   return (
     <div>
       {/* section1 */}

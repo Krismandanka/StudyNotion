@@ -58,7 +58,7 @@ function SignupForm() {
 
 
 
-    // dispatch(setSignupData(signupData))
+    dispatch(setSignupData(signupData))
 
 
 
@@ -66,7 +66,7 @@ function SignupForm() {
 
 
     // 
-    // dispatch(sendOtp(formData.email, navigate))
+    dispatch(sendOtp(formData.email, navigate))
 
     // Reset
     setFormData({

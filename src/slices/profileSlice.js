@@ -19,11 +19,13 @@ const profileSlice = createSlice({
             state.user=value.payload
             localStorage.setItem("user",JSON.stringify(value.payload));
 
-        }
+        },setLoading(state,value){
+            state.loading=value.payload
+        },
     }
 })
 
-export const {setUser}= profileSlice.actions;
+export const {setUser,setLoading}= profileSlice.actions;
 export default profileSlice.reducer;
 
 
