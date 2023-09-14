@@ -100,11 +100,11 @@ exports.createCourse = async (req, res) => {
 			{ new: true }
 		);
 		// Add the new course to the Categories
-		await Category.findByIdAndUpdate(
+		const updC = await Category.findByIdAndUpdate(
 			{ _id: category },
 			{
 				$push: {
-					course: newCourse._id,
+					courses: newCourse._id,
 				},
 			},
 			{ new: true }
@@ -114,6 +114,7 @@ exports.createCourse = async (req, res) => {
 			success: true,
 			data: newCourse,
 			message: "Course Created Successfully",
+			updC
 		});
 	} catch (error) {
 		// Handle any errors that occur during the creation of the course
