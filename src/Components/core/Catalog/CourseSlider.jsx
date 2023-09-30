@@ -86,6 +86,7 @@ const CourseSlider = ({Courses}) => {
                   <Skeleton className=" md:h-[20px] w-[70px] rounded-md" />
                   <Skeleton className="md:h-[20px] md:w-[400px] rounded-md" />
                   <Skeleton className="md:h-[20px] md:w-[400px] rounded-md"/>
+                  
                 </div>
               </SkeletonTheme>
                 <SkeletonTheme baseColor="#2C333F" highlightColor="#161D29">

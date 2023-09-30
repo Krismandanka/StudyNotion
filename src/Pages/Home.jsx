@@ -12,6 +12,7 @@ import RatingSlider from "../Components/core/Rating/RatingSlider";
 import Foot from "../Components/core/HomePage/Foot";
 import {logout} from "../services/operations/authAPI"
 import { useDispatch } from "react-redux";
+import { setProgress } from "../slices/loadingBarSlice";
 
 
 const Home = () => {
@@ -21,7 +22,7 @@ const Home = () => {
     <div>
       {/* section1 */}
       <div className=" mx-auto relative flex flex-col w-11/12 items-center justify-between text-white max-w-maxContent">
-        <Link to={"/signup"}>
+        <Link to={"/signup"} onClick={()=>{dispatchEvent(setProgress(100))}}>
           <div className="group mx-auto mt-16 p-1 rounded-full bg-richblack-800 font-bold text-richblack-200 transition-all duration-200 hover:scale-95 w-fit">
             <div className="flex flex-row items-center gap-2 rounded-full px-10 py-[5px] group-hover:bg-richblack-900">
               <p>Become a Instructor</p>
