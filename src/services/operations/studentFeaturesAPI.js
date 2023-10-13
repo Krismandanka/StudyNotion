@@ -34,7 +34,9 @@ export async function buyCourse (token, courses, userDetails, navigate, dispatch
       autoClose: false,
     });
     try {
+        
     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    console.log("chilll");
     if (!res) {
         toast.error("Razorpay SDK failed to load. Are you online?");
         return;
@@ -80,7 +82,7 @@ export async function buyCourse (token, courses, userDetails, navigate, dispatch
 
     } catch (error) {
         toast.dismiss(toastId);
-        toast.error("Something went wrong");
+        toast.error("Something went wrongss");
         console.log("buyCourse -> error", error)
     }
 }

@@ -6,7 +6,13 @@ import {FiEdit} from "react-icons/fi"
 
 const MyProfile = () => {
 
-    const {user} = useSelector((state) => state.profile)
+    // const {user} = useSelector((state) => state.profile)
+    const user = localStorage.getItem('user') 
+    ? JSON.parse(localStorage.getItem('user'))
+
+    : {}
+    console.log("amjhfgggggggg,",user);
+
     const navigate = useNavigate();
   return (
     <div className='mx-auto w-11/12 max-w-[1000px] py-10'>

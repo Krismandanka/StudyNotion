@@ -27,6 +27,9 @@ import Cart from "./Components/core/Dashboard/Cart/index";
 function App() {
   // const user = useSelector((state) => state.profile.user);
   // const dispatch = useDispatch();
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : {};
 
   return ( 
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
@@ -52,19 +55,19 @@ function App() {
 
         <Route path="/courses/:courseId" element={<CourseDetails />} />
 
-        {/* {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+        {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route path="dashboard/cart" element={<Cart />} />
-              <Route
+              {/* <Route
                 path="dashboard/enrolled-courses"
                 element={<EnrollledCourses />}
               />
               <Route
                 path="dashboard/purchase-history"
                 element={<PurchaseHistory />}
-              />
+              /> */}
             </>
-          )} */}
+          )}
 
       </Routes>
 
