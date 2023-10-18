@@ -28,7 +28,9 @@ function loadScript (src) {
 
 
 export async function buyCourse (token, courses, userDetails, navigate, dispatch) {
-    // console.log("buyCourse -> courses",process.env.REACT_APP_BASE_URL)
+    console.log("buyCourse -> courses",process.env.REACT_APP_BASE_URL)
+
+    console.log("its meeeeeeeeeeeeeee")
     const toastId = toast.loading("Please wait while we redirect you to payment gateway", {
       position: "bottom-center",
       autoClose: false,
@@ -36,7 +38,7 @@ export async function buyCourse (token, courses, userDetails, navigate, dispatch
     try {
         
     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
-    console.log("chilll");
+    // console.log("omagooo",res);
     if (!res) {
         toast.error("Razorpay SDK failed to load. Are you online?");
         return;
@@ -45,6 +47,7 @@ export async function buyCourse (token, courses, userDetails, navigate, dispatch
     const orderResponse = await apiConnector("POST", COURSE_PAYMENT_API, {courses},{
         Authorisation: `Bearer ${token}`,
     })
+    console.log("yyyyyyyyyyy",orderResponse)
     if(!orderResponse.data.success){
         toast.error(orderResponse.data.message)
         console.log("buyCourse -> orderResponse", orderResponse)

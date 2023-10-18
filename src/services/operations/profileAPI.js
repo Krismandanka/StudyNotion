@@ -11,8 +11,11 @@ import { logout } from "./authAPI.js";
 export async function getUserCourses(token,dispatch){
     // const toastId = toast.loading("Loading...");
     dispatch(setProgress);
+    console.log("meeeeeeeeee")
     let result = []
     try {
+      console.log("ttttttttt");
+
       console.log("BEFORE Calling BACKEND API FOR ENROLLED COURSES");
       const response = await apiConnector(
         "GET",

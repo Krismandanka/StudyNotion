@@ -16,7 +16,10 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { ACCOUNT_TYPE } from "./utils/constants";
 import { useDispatch } from "react";
 import Cart from "./Components/core/Dashboard/Cart/index";
+import PrivateRoute from "./Components/core/auth/PrivateRoute";
+import EnrollledCourses from "./Components/core/Dashboard/EnrolledCourses";
 
+import Dashboard from "./Pages/Dashboard";
 
 
 
@@ -55,14 +58,23 @@ function App() {
 
         <Route path="/courses/:courseId" element={<CourseDetails />} />
 
+        <Route
+         path="/naii"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        ></Route>
+
         {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route path="dashboard/cart" element={<Cart />} />
-              {/* <Route
+              <Route
                 path="dashboard/enrolled-courses"
                 element={<EnrollledCourses />}
               />
-              <Route
+              {/* <Route
                 path="dashboard/purchase-history"
                 element={<PurchaseHistory />}
               /> */}
