@@ -67,7 +67,7 @@ const EnrolledCourses = () => {
                     {
                         enrolledCourses.map((course,index)=> (
                             <div key={index} onClick={()=>{
-                                navigate(`view-course/${course._id}/section/${course.courseContent[0]._id}/sub-section/${course.courseContent[0].subSection[0]}`)}}
+                                navigate(`/view-course/${course._id}/section/${course.courseContent[0]._id}/sub-section/${course.courseContent[0].subSection[0]}`)}}
                                  className='flex items-center border border-richblack-700 rounded-none'>
                                 <div className='flex w-[45%] cursor-pointer items-center gap-4 px-5 py-3'>
                                     <img className='h-14 w-14 rounded-lg object-cover'  src={course.thumbnail}/>

@@ -18,8 +18,9 @@ import { useDispatch } from "react";
 import Cart from "./Components/core/Dashboard/Cart/index";
 import PrivateRoute from "./Components/core/auth/PrivateRoute";
 import EnrollledCourses from "./Components/core/Dashboard/EnrolledCourses";
-
+import VideoDetails from "./Components/core/viewCourse/VideoDetails";
 import Dashboard from "./Pages/Dashboard";
+import ViewCourse from "./Pages/ViewCourse";
 
 
 
@@ -60,12 +61,32 @@ function App() {
 
         <Route
          path="/naii"
-          element={
+          element={ 
             <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
           }
         ></Route>
+
+        <Route
+         element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+        }>
+          
+          {
+            user?.accountType===ACCOUNT_TYPE.STUDENT &&(
+              <>
+                <Route 
+                  path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                  element={<VideoDetails/>}
+                />
+              </>
+            )
+          }
+        </Route>
+
 
         {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
